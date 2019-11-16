@@ -1,0 +1,35 @@
+create table public.cliente(
+	codigocliente serial,
+	cpf int not null,
+	nomecompleto varchar(30) not null,
+	telefone varchar(30) not null,
+	endereco varchar(30) not null,
+	datanascimento date not null,
+	constraint cliente_cpf primary key(cpf)
+);
+create table public.carro(
+	codigocarro serial,
+	marca varchar(30) not null,
+	modelo varchar(30) not null,
+	anofabricacao int not null,
+	quantidadePortas int not null,
+	tipocombustivel varchar(15) not null,
+	constraint carro_codigocarro primary key(codigocarro)
+);
+create table public.aluga(
+	codigoaluguel serial,
+	codigocarro int,
+	cpf int,
+	dataretiradacarro date not null,
+	dataentregacarro date not null,
+	horaretiradacarro time not null, 
+	horaentregacarro time not null,
+	valoraluguel numeric not null,
+	periodo varchar(10) not null,
+	valortotal numeric not null,
+	constraint aluga_codigoaluguel_pk primary key(codigoaluguel),
+	constraint aluga_codigocarro_fk foreign key(codigocarro)
+	references carro(codigocarro),
+	constraint aluga_cpf_fk foreign key(cpf)
+	references cliente(cpf)
+);
